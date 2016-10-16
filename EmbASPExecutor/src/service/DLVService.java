@@ -22,8 +22,6 @@ public class DLVService {
 		this.program=program;
 		this.setResult(new Result());
 		this.dlvService=new DLVDesktopService("WebContent/WEB-INF/lib/dlv.i386-apple-darwin.bin");
-		
-		System.out.println(dlvService);
 		this.gson = new Gson();
 	}
 	
