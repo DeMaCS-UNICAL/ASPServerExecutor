@@ -1,18 +1,18 @@
 package model;
 
 public class Result {
-	private String modal;
+	private String model;
 	
 	public Result() {
-		this.modal="";
+		this.model="";
 	}
 
 	public String getModal() {
-		return modal;
+		return model;
 	}
 
-	public void setModal(String modal) {
-		this.modal = modal;
+	public void setModal(String model) {
+		this.model = model;
 	}
 
 }
