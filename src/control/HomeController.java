@@ -18,7 +18,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 import model.Option;
-import service.DLVService;
+import service.SolverDLV;
 
 /**
  * Servlet implementation class provaServelt
@@ -35,10 +35,10 @@ public class HomeController extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		BufferedReader br = new BufferedReader(request.getReader());
 		String json = null;
@@ -57,30 +57,18 @@ public class HomeController extends HttpServlet {
 		ArrayList<Option> options = gson.fromJson(object.get("option"), optionType);
 		switch (engine) {
 		case "dlv":
-			DLVService service= new DLVService(program);
+			SolverDLV service = new SolverDLV(program);
 			if (options.get(0).getName().equals("option"))
-				model=service.solve();
+				model = service.solve();
 			else
-				model=service.solveWithOption(options);
-				
-			
+				model = service.solveWithOption(options);
+
 			break;
 
 		default:
 			break;
 		}
-
 		response.getWriter().write(model);
-
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		doGet(request, response);
 	}
 
 }
