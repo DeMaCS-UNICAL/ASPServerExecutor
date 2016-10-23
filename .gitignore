@@ -3,10 +3,48 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
+# OS Files #
+.DS_Store
+
 # Package Files #
 *.jar
 *.war
 *.ear
+*.db
+
+# Directories #
+/build/
+/bin/
+target/
+
+######################
+# Eclipse
+######################
+ 
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.metadata
+.classpath
+.settings/
+.loadpath
+.recommenders
+
+# Eclipse Core
+.project
+
+# External tool builders
+.externalToolBuilders/
+
+# Code Recommenders
+.recommenders/
+ 
+# Locally stored "Eclipse launch configurations"
+*.launch
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
