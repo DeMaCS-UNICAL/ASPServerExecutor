@@ -3,6 +3,8 @@ package service;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+
+
 import it.unical.mat.embasp.base.Handler;
 import it.unical.mat.embasp.base.InputProgram;
 import it.unical.mat.embasp.base.OptionDescriptor;
@@ -21,8 +23,7 @@ public class SolverDLV {
 
 	public SolverDLV(String program) {
 		this.result = new Result();
-		Path path = Paths.get("lib/dlv.i386-apple-darwin.bin");
-		this.dlvService = new DLVDesktopService(path.toAbsolutePath().toString());
+		this.dlvService = checkOS();
 		this.handler = new DesktopHandler(dlvService);
 		this.input = new InputProgram();
 		this.program = program;
@@ -71,6 +72,30 @@ public class SolverDLV {
 		Output output = handler.startSync();
 		result.setModel(output.getOutput());
 		return result.toJson();
+
+	}
+
+	public DLVDesktopService checkOS() {
+		String OS = System.getProperty("os.name").toLowerCase();
+		Path path = null;
+
+		if (OS.indexOf("win") >= 0) {
+			path = Paths.get("lib/dlv.mingw.exe");
+			return new DLVDesktopService(path.toAbsolutePath().toString());
+		} else if (OS.indexOf("mac") >= 0) {
+			path = Paths.get("lib/dlv.i386-apple-darwin.bin");
+			return new DLVDesktopService(path.toAbsolutePath().toString());
+		} else if (OS.indexOf("nux") >= 0) {
+			String arch = System.getProperty("os.arch");
+			if (arch.equals("x86_64")) {
+				path = Paths.get("lib/dlv.x86-64-linux-elf-static.bin");
+				return new DLVDesktopService(path.toAbsolutePath().toString());
+			} else {
+				path = Paths.get("lib/dlv.i386-apple-darwin.bin");
+				return new DLVDesktopService(path.toAbsolutePath().toString());
+			}
+		}
+		return null;
 
 	}
 
