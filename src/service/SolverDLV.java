@@ -45,28 +45,30 @@ public class SolverDLV {
 		for (int i = 0; i < options.size(); i++) {
 			Option optiontmp = options.get(i);
 			OptionDescriptor opDescriptor = null;
-			if (optiontmp.getValue().size() == 1 && !optiontmp.getValue().get(0).equals("")) {
-				opDescriptor = new OptionDescriptor("-" + optiontmp.getName() + "=");
-				opDescriptor.setSeparator("");
-				opDescriptor.addOption(optiontmp.getValue().get(0) + " ");
-				handler.addOption(opDescriptor);
+			if (!optiontmp.getName().equals("option")) {
+				if (optiontmp.getValue().size() == 1 && !optiontmp.getValue().get(0).equals("")) {
+					opDescriptor = new OptionDescriptor("-" + optiontmp.getName() + "=");
+					opDescriptor.setSeparator("");
+					opDescriptor.addOption(optiontmp.getValue().get(0) + " ");
+					handler.addOption(opDescriptor);
 
-			} else if (optiontmp.getValue().size() > 1) {
-				opDescriptor = new OptionDescriptor("-" + optiontmp.getName() + "=");
-				opDescriptor.setSeparator(",");
-				for (int k = 0; k < optiontmp.getValue().size() - 1; k++) {
-					opDescriptor.addOption(optiontmp.getValue().get(k));
+				} else if (optiontmp.getValue().size() > 1) {
+					opDescriptor = new OptionDescriptor("-" + optiontmp.getName() + "=");
+					opDescriptor.setSeparator(",");
+					for (int k = 0; k < optiontmp.getValue().size() - 1; k++) {
+						opDescriptor.addOption(optiontmp.getValue().get(k));
+					}
+					opDescriptor.addOption(optiontmp.getValue().get(optiontmp.getValue().size() - 1) + " ");
+					handler.addOption(opDescriptor);
+
+				} else {
+					opDescriptor = new OptionDescriptor("-" + optiontmp.getName() + " ");
+					opDescriptor.setSeparator("");
+					handler.addOption(opDescriptor);
+
 				}
-				opDescriptor.addOption(optiontmp.getValue().get(optiontmp.getValue().size() - 1) + " ");
-				handler.addOption(opDescriptor);
-
-			} else {
-				opDescriptor = new OptionDescriptor("-" + optiontmp.getName() + " ");
-				opDescriptor.setSeparator("");
-				handler.addOption(opDescriptor);
 
 			}
-
 		}
 
 		Output output = handler.startSync();
