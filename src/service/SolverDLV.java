@@ -32,15 +32,11 @@ public class SolverDLV {
 		handler.addProgram(input);
 	}
 
-	public String solve() {
-		handler.addProgram(input);
-		Output output = handler.startSync();
-		result.setModel(output.getOutput());
-		return result.toJson();
-
+	public void solve(MyCallback callback) {
+		handler.startAsync(callback);
 	}
 
-	public String solveWithOption(ArrayList<Option> options) {
+	public void solveWithOption(ArrayList<Option> options, MyCallback callback) {
 
 		for (int i = 0; i < options.size(); i++) {
 			Option optiontmp = options.get(i);
@@ -71,9 +67,7 @@ public class SolverDLV {
 			}
 		}
 
-		Output output = handler.startSync();
-		result.setModel(output.getOutput());
-		return result.toJson();
+		handler.startAsync(callback);
 
 	}
 

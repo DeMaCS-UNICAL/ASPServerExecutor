@@ -17,7 +17,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
+import it.unical.mat.embasp.asp.AnswerSets;
+import it.unical.mat.embasp.base.Callback;
+import it.unical.mat.embasp.base.Output;
+import model.MyCallback;
 import model.Option;
+import model.Result;
 import service.SolverDLV;
 
 /**
@@ -55,20 +60,26 @@ public class HomeController extends HttpServlet {
 		Type optionType = new TypeToken<ArrayList<Option>>() {
 		}.getType();
 		ArrayList<Option> options = gson.fromJson(object.get("option"), optionType);
+		Result result= new Result();
 		switch (engine) {
 		case "dlv":
 			SolverDLV service = new SolverDLV(program);
-			if (options.get(0).getName().equals("option"))
-				model = service.solve();
-			else
-				model = service.solveWithOption(options);
-
+			if (options.get(0).getName().equals("option")){
+				MyCallback callback = new MyCallback(result, response);
+				service.solve(callback);
+			}else{
+				MyCallback callback = new MyCallback(result, response);
+				service.solveWithOption(options,callback);}
+		
 			break;
 
 		default:
 			break;
 		}
-		response.getWriter().write(model);
+
+	}
+	
+		
 	}
 
-}
+
