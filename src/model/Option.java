@@ -11,6 +11,20 @@ public class Option {
 		this.value = new ArrayList<>();
 	}
 
+	public String getToASP() {
+		StringBuffer s = new StringBuffer();
+		s.append(name);
+		for (int i = 0; i < value.size(); i++) {
+			if (i != 0) {
+				s.append(",");
+			}
+			s.append(value.get(i));
+
+		}
+
+		return s.toString();
+	}
+
 	public String getName() {
 		return name;
 	}

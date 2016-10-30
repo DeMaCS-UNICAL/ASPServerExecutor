@@ -17,9 +17,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
-import it.unical.mat.embasp.asp.AnswerSets;
-import it.unical.mat.embasp.base.Callback;
-import it.unical.mat.embasp.base.Output;
 import model.MyCallback;
 import model.Option;
 import model.Result;
@@ -50,6 +47,7 @@ public class HomeController extends HttpServlet {
 		if (br != null) {
 			json = br.readLine();
 		}
+		String metod = request.getParameter("metod");
 		JsonParser parser = new JsonParser();
 		JsonElement element = parser.parse(json);
 		JsonObject object = element.getAsJsonObject();
@@ -60,17 +58,25 @@ public class HomeController extends HttpServlet {
 		Type optionType = new TypeToken<ArrayList<Option>>() {
 		}.getType();
 		ArrayList<Option> options = gson.fromJson(object.get("option"), optionType);
-		Result result= new Result();
+		SolverDLV service = new SolverDLV(program);
 		switch (engine) {
 		case "dlv":
-			SolverDLV service = new SolverDLV(program);
-			if (options.get(0).getName().equals("option")){
+			switch (metod) {
+			case "sync":
+				model = service.solveSync(options);
+				response.getWriter().write(model);
+				break;
+				
+			case "async":
+				Result result = new Result();
 				MyCallback callback = new MyCallback(result, response);
-				service.solve(callback);
-			}else{
-				MyCallback callback = new MyCallback(result, response);
-				service.solveWithOption(options,callback);}
-		
+				service.solveAsync(options, callback);
+				break;
+				
+			default:
+				break;
+			}
+
 			break;
 
 		default:
@@ -78,8 +84,5 @@ public class HomeController extends HttpServlet {
 		}
 
 	}
-	
-		
-	}
 
-
+}
