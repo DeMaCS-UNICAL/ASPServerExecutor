@@ -2,7 +2,12 @@ package service;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import it.unical.mat.embasp.asp.AnswerSets;
 import it.unical.mat.embasp.base.Handler;
 import it.unical.mat.embasp.base.InputProgram;
 import it.unical.mat.embasp.base.OptionDescriptor;
@@ -21,10 +26,13 @@ public class SolverDLV {
 	private Handler handler;
 	private InputProgram input;
 	private Config config;
+	private Set<String> optionsDLV;
 
 	public SolverDLV(String program) {
 		this.result = new Result();
 		this.config = new Config();
+		this.optionsDLV = new HashSet<String>();
+		addOptions();
 		this.dlvService = new DLVDesktopService(getPath());
 		this.handler = new DesktopHandler(dlvService);
 		this.input = new InputProgram();
@@ -45,12 +53,18 @@ public class SolverDLV {
 		}
 		opDescriptor.addOption(" ");
 		Output output = handler.startSync();
-		result.setModel(output.getOutput());
+		AnswerSets answerSets=(AnswerSets)output;
+		if (answerSets.getAnswersets().isEmpty()){
+			result.setError("Sorry, there aren't answer sets for this program");
+		}else{
+			result.setModel(answerSets.getAnswerSetsString());
+			
+		}
 		return result.toJson();
 
 	}
 
-	public void solveAsync(ArrayList<Option> options,MyCallback callback) {
+	public void solveAsync(ArrayList<Option> options, MyCallback callback) {
 		OptionDescriptor opDescriptor = new OptionDescriptor();
 		opDescriptor.setSeparator(" ");
 		for (int i = 0; i < options.size(); i++) {
@@ -61,7 +75,6 @@ public class SolverDLV {
 		opDescriptor.addOption(" ");
 		handler.startAsync(callback);
 	}
-
 
 	public String getPath() {
 		String OS = System.getProperty("os.name").toLowerCase();
@@ -89,6 +102,31 @@ public class SolverDLV {
 		}
 		return path.toString();
 
+	}
+
+	public void addOptions() {
+		optionsDLV.add("-silent");
+		optionsDLV.add("-filter=");
+		optionsDLV.add("-nofacts");
+	}
+
+	public boolean checkOptionsDLV(ArrayList<Option> options) {
+		Pattern regex = Pattern.compile("[A-Za-z0-9]+");
+		Matcher matcher;
+
+		for (Option option : options) {
+			if (!optionsDLV.contains(option.getName()) && !option.getName().equals("option")) {
+				return false;
+			}
+			for (String value : option.getValue()) {
+				matcher = regex.matcher(value);
+				if (!matcher.matches()) {
+					return false;
+				}
+			}
+		}
+
+		return true;
 	}
 
 	public InputProgram getInput() {
@@ -137,6 +175,14 @@ public class SolverDLV {
 
 	public void setConfig(Config config) {
 		this.config = config;
+	}
+
+	public Set<String> getOptionsDLV() {
+		return optionsDLV;
+	}
+
+	public void setOptionsDLV(Set<String> optionDLV) {
+		this.optionsDLV = optionDLV;
 	}
 
 }

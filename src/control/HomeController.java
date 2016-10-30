@@ -58,21 +58,31 @@ public class HomeController extends HttpServlet {
 		Type optionType = new TypeToken<ArrayList<Option>>() {
 		}.getType();
 		ArrayList<Option> options = gson.fromJson(object.get("option"), optionType);
-		SolverDLV service = new SolverDLV(program);
+		Result result = new Result();
 		switch (engine) {
 		case "dlv":
+			SolverDLV service = new SolverDLV(program);
 			switch (metod) {
 			case "sync":
-				model = service.solveSync(options);
+				if (service.checkOptionDLV(options)) {
+					model = service.solveSync(options);
+				} else {
+					result.setError("Sorry, these options aren't valid");
+					model = result.toJson();
+				}
 				response.getWriter().write(model);
 				break;
-				
+
 			case "async":
-				Result result = new Result();
-				MyCallback callback = new MyCallback(result, response);
-				service.solveAsync(options, callback);
+				if (service.checkOptionDLV(options)) {
+					MyCallback callback = new MyCallback(result, response);
+					service.solveAsync(options, callback);
+				} else {
+					result.setError("Sorry, these options aren't valid");
+					model = result.toJson();
+				}
 				break;
-				
+
 			default:
 				break;
 			}
