@@ -49,6 +49,11 @@ public class SocketController {
 			MyCallback callback = new MyCallback(result);
 			if (service.checkOptionsDLV(options)) {
 				service.solveAsync(options, callback);
+				while (result.getModel().equals("")) {
+					model = result.toJson();
+				}
+				model = result.toJson();
+				
 			} else {
 				result.setError("Sorry, these options aren't valid");
 				model = result.toJson();
@@ -59,10 +64,6 @@ public class SocketController {
 			break;
 		}
 
-		while (result.getModel().equals("")) {
-			model = result.toJson();
-		}
-		model = result.toJson();
 		return model;
 
 	}
