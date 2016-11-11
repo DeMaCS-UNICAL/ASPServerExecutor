@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import it.unical.mat.embasp.asp.AnswerSets;
+import it.unical.mat.embasp.base.Callback;
 import it.unical.mat.embasp.base.Handler;
 import it.unical.mat.embasp.base.InputProgram;
 import it.unical.mat.embasp.base.OptionDescriptor;
@@ -15,10 +16,16 @@ import it.unical.mat.embasp.base.Output;
 import it.unical.mat.embasp.platforms.desktop.DesktopHandler;
 import it.unical.mat.embasp.specializations.dlv.desktop.DLVDesktopService;
 import model.MyCallback;
+import model.MyCallback;
 import model.Option;
 import model.Result;
 import resources.Config;
 
+/**
+ * Racchiude nelle funzioni i metodi del framework EmbASP per generare Answer
+ * Set usuffruendo del solver DLV
+ *
+ */
 public class SolverDLV {
 	private String program;
 	private DLVDesktopService dlvService;
@@ -28,6 +35,12 @@ public class SolverDLV {
 	private Config config;
 	private Set<String> optionsDLV;
 
+	/**
+	 * inizializza le varie classi necessarie al funzionamento di EmbASP
+	 * 
+	 * @param program
+	 *            riceve e inserisce il programma per essere seguito
+	 */
 	public SolverDLV(String program) {
 		this.result = new Result();
 		this.config = new Config();
@@ -42,6 +55,14 @@ public class SolverDLV {
 		handler.addProgram(input);
 	}
 
+	/**
+	 * Aggiunge le opzioni al programma ed esegue il solver in maniere sincrona
+	 * 
+	 * @param options
+	 *            Riceve le opzioni da settare
+	 * @return string Restuisce in formato json, gli Answer Set nell'oggetto
+	 *         Result
+	 */
 	public String solveSync(ArrayList<Option> options) {
 		OptionDescriptor opDescriptor = new OptionDescriptor();
 		opDescriptor.setSeparator(" ");
@@ -53,18 +74,26 @@ public class SolverDLV {
 		}
 		opDescriptor.addOption(" ");
 		Output output = handler.startSync();
-		AnswerSets answerSets=(AnswerSets)output;
-		if (answerSets.getAnswersets().isEmpty()){
+		AnswerSets answerSets = (AnswerSets) output;
+		if (answerSets.getAnswersets().isEmpty()) {
 			result.setError("Sorry, there aren't answer sets for this program");
-		}else{
+		} else {
 			result.setModel(answerSets.getAnswerSetsString());
-			
+
 		}
 		return result.toJson();
 
 	}
 
-	public void solveAsync(ArrayList<Option> options, MyCallback callback) {
+	/**
+	 * Aggiunge le opzioni al programma e esegue il solver in maniera asincrona
+	 * 
+	 * @param options
+	 *            Riceve le opzioni da settare
+	 * @param call
+	 *            Classe necessaria per eseguire il metodo in maniera asincrona
+	 */
+	public void solveAsync(ArrayList<Option> options, Callback call) {
 		OptionDescriptor opDescriptor = new OptionDescriptor();
 		opDescriptor.setSeparator(" ");
 		for (int i = 0; i < options.size(); i++) {
@@ -73,9 +102,16 @@ public class SolverDLV {
 			handler.addOption(opDescriptor);
 		}
 		opDescriptor.addOption(" ");
-		handler.startAsync(callback);
+		handler.startAsync(call);
 	}
 
+	/**
+	 * Restiuice il path assoluto del solver dalla classe di configurazione e
+	 * sceglie il solver adeguato al proprio sistema oprativo
+	 * 
+	 * @return String Concatena il path assoluto e il tipo di solver in base al
+	 *         sistema operativo ed eventualmente anche all'architettura
+	 */
 	public String getPath() {
 		String OS = System.getProperty("os.name").toLowerCase();
 		StringBuffer path = new StringBuffer();
@@ -104,23 +140,38 @@ public class SolverDLV {
 
 	}
 
+	/**
+	 * Aggiunge le opzioni di DLV, utilizzati successivamente per il controllo
+	 */
 	public void addOptions() {
 		optionsDLV.add("-silent");
 		optionsDLV.add("-filter=");
 		optionsDLV.add("-nofacts");
 	}
 
+	/**
+	 * Controlla che il formato delle opzioni sia corretto, utilizzando la regex
+	 * per il valore e verificando se il nome delle opzioni esiste tra quelle
+	 * di DLV
+	 * 
+	 * @param options
+	 *            Riceve le opzioni da controllare
+	 * @return boolean Se le opzioni risultano corrette ritorna true altrimenti
+	 *         false
+	 */
 	public boolean checkOptionsDLV(ArrayList<Option> options) {
 		Pattern regex = Pattern.compile("[A-Za-z0-9]+");
 		Matcher matcher;
 
 		for (Option option : options) {
 			if (!optionsDLV.contains(option.getName()) && !option.getName().equals("option")) {
+
 				return false;
 			}
 			for (String value : option.getValue()) {
 				matcher = regex.matcher(value);
 				if (!matcher.matches()) {
+
 					return false;
 				}
 			}

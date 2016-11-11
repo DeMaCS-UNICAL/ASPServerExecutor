@@ -1,6 +1,10 @@
 package model;
 
 import com.google.gson.Gson;
+/**
+ * Memoriazza gli answer set o eventuali errori
+ *
+ */
 
 public class Result {
 	private String model;
@@ -12,7 +16,10 @@ public class Result {
 		this.error="";
 		this.gson= new Gson();
 	}
-	
+	/**
+	 * Trasforma in json l'oggetto Result
+	 * @return string
+	 */
 	public String toJson()
 	{
 		return gson.toJson(this);

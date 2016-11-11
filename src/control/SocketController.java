@@ -31,7 +31,7 @@ public class SocketController {
 	}
 
 	@OnMessage
-	public String onMessage(String message, Session session) { 	// Metodo eseguito alla ricezione di un messaggio, la stringa 'message' rappresenta il messaggio
+	public String onMessage(String message, Session session) { // Metodo eseguito alla ricezione di un messaggio, la stringa 'message'rappresenta il messaggio in formato json
 		JsonParser parser = new JsonParser();
 		JsonElement element = parser.parse(message);
 		JsonObject object = element.getAsJsonObject();
@@ -46,14 +46,11 @@ public class SocketController {
 		switch (engine) {
 		case "dlv":
 			SolverDLV service = new SolverDLV(program);
-			MyCallback callback = new MyCallback(result);
-			if (service.checkOptionsDLV(options)) {
-				service.solveAsync(options, callback);
-				while (result.getModel().equals("")) {
-					model = result.toJson();
-				}
+			if (service.checkOptionsDLV(options)) { // cotrolla che le opzioni ricevute siano nel formato corretto
+				service.solveAsync(options, new MyCallback(session.getAsyncRemote()));
+				result.setError("Wait, I'm thinking.."); //restitusce questo 'messaggio' se ancora il solver non ha finito di eseguire il programma
 				model = result.toJson();
-				
+
 			} else {
 				result.setError("Sorry, these options aren't valid");
 				model = result.toJson();

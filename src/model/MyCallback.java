@@ -1,35 +1,39 @@
 package model;
 
+import javax.websocket.RemoteEndpoint;
+import javax.websocket.RemoteEndpoint.Async;
+
 import it.unical.mat.embasp.asp.AnswerSets;
 import it.unical.mat.embasp.base.Callback;
 import it.unical.mat.embasp.base.Output;
-
+/**
+ * Implementa la classe Callback per comunicare il risultato del solver ed eseguirlo in maniera asincrona
+ *
+ */
 public class MyCallback implements Callback {
+	private Async remote;
 
-	private Result result;
-
-	public MyCallback(Result result) {
-		this.result = result;
+	/**
+	 * Costruttore della classe, inizializza l'oggetto RemoteEndpoint.Async
+	 * @param remote Riceve l'oggetto RemoteEndpoint.Async per poter inviare i messaggi in maniera asincrona
+	 */
+	public MyCallback(RemoteEndpoint.Async remote) {
+		this.remote = remote;
+		
 	}
 
 	@Override
 	public void callback(Output output) {
 		AnswerSets answerSets = (AnswerSets) output;
+		Result r = new Result();
 		if (answerSets.getAnswersets().isEmpty()) {
-			result.setModel("Sorry, there aren't answer sets for this program");
+			 r.setError("Sorry, there aren't answer sets for this program");
+			
 		} else {
-			result.setModel(answerSets.getAnswerSetsString());
+			r.setModel(answerSets.getAnswerSetsString());
 
 		}
-
-	}
-
-	public Result getResult() {
-		return result;
-	}
-
-	public void setResult(Result result) {
-		this.result = result;
+		remote.sendText(r.toJson());
 	}
 
 }

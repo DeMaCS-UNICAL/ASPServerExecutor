@@ -1,7 +1,10 @@
 package model;
 
 import java.util.ArrayList;
-
+/**
+ * Memoriazza e gestisce le opzioni in input
+ *
+ */
 public class Option {
 	private String name;
 	private ArrayList<String> value;
@@ -10,7 +13,10 @@ public class Option {
 		this.name = "";
 		this.value = new ArrayList<>();
 	}
-
+/**
+ * Costruisce le opzioni separando gli eventuali valori tra " , ", in quanto il metodo addOption non permette lo spazio tra l'aggiunta di un opzione e l'altra
+ * @return string
+ */
 	public String getToASP() {
 		StringBuffer s = new StringBuffer();
 		s.append(name);
@@ -40,5 +46,6 @@ public class Option {
 	public void setValue(ArrayList<String> value) {
 		this.value = value;
 	}
+
 
 }
