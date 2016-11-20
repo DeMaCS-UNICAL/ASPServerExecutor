@@ -168,7 +168,7 @@ public class SolverDLV {
 	 *         false
 	 */
 	public boolean checkOptionsDLV(ArrayList<Option> options) {
-		Pattern regex = Pattern.compile("[A-Za-z0-9=_-]+");
+		Pattern regex = Pattern.compile("[A-Za-z0-9=_-]*");
 		Matcher matcher;
 
 		for (Option option : options) {
