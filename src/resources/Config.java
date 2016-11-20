@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Properties;
 /**
  * Gestisce il file 'config.properties'
- *
  */
 public class Config {
 	private Properties configFile;
@@ -20,7 +19,16 @@ public class Config {
 
 	public String getAbsolutePath() {
 		return configFile.getProperty("absolute_path");
-	} 
+	}
+	public String getAbsolutePathTimeout(){
+		return configFile.getProperty("absolute_path_timeout");
+	}
+	public String getMemMax(){
+		return configFile.getProperty("memMax");
+	}
+	public String getTimeMax(){
+		return configFile.getProperty("timeMax");
+	}
 
 	public Properties getConfigFile() {
 		return configFile;

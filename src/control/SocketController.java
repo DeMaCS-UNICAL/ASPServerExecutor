@@ -2,6 +2,8 @@ package control;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -19,6 +21,7 @@ import com.google.gson.reflect.TypeToken;
 import model.MyCallback;
 import model.Option;
 import model.Result;
+import service.SolverClingo;
 import service.SolverDLV;
 
 @ServerEndpoint("/home")
@@ -31,12 +34,12 @@ public class SocketController {
 	}
 
 	@OnMessage
-	public String onMessage(String message, Session session) { // Metodo eseguito alla ricezione di un messaggio, la stringa 'message'rappresenta il messaggio in formato json
+	public void onMessage(String message, Session session) { // Metodo eseguito alla ricezione di un messaggio, la stringa 'message'rappresenta il messaggio in formato json
 		JsonParser parser = new JsonParser();
 		JsonElement element = parser.parse(message);
 		JsonObject object = element.getAsJsonObject();
-		String model = "";
 		Gson gson = new Gson();
+		Lock lock = new ReentrantLock();
 		String engine = gson.fromJson(object.get("engine"), String.class);
 		String program = gson.fromJson(object.get("program"), String.class);
 		Type optionType = new TypeToken<ArrayList<Option>>() {
@@ -47,21 +50,30 @@ public class SocketController {
 		case "dlv":
 			SolverDLV service = new SolverDLV(program);
 			if (service.checkOptionsDLV(options)) { // cotrolla che le opzioni ricevute siano nel formato corretto
-				service.solveAsync(options, new MyCallback(session.getAsyncRemote()));
-				result.setError("Wait, I'm thinking.."); //restitusce questo 'messaggio' se ancora il solver non ha finito di eseguire il programma
-				model = result.toJson();
+				service.solveAsync(options, new MyCallback(session.getAsyncRemote(),lock));
 
 			} else {
 				result.setError("Sorry, these options aren't valid");
-				model = result.toJson();
+			}
+			break;
+		case "clingo":
+			SolverClingo serviceClingo = new SolverClingo(program);
+			if (serviceClingo.checkOptionsClingo(options)) {
+				serviceClingo.solveAsync(options, new MyCallback(session.getAsyncRemote(),lock));
+			} else {
+				result.setError("Sorry, these options aren't valid");
 			}
 			break;
 
 		default:
 			break;
 		}
+		if (result.getError().equals(""))
+		result.setError("Wait, I'm thinking..");//restitusce questo 'messaggio' se ancora il solver non ha finito di eseguire il programma
+		lock.lock();
+		session.getAsyncRemote().sendText(result.toJson());
+		lock.unlock();
 
-		return model;
 
 	}
 

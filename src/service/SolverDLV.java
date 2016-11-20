@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import it.unical.mat.embasp.asp.AnswerSets;
 import it.unical.mat.embasp.base.Callback;
 import it.unical.mat.embasp.base.Handler;
@@ -15,8 +14,6 @@ import it.unical.mat.embasp.base.OptionDescriptor;
 import it.unical.mat.embasp.base.Output;
 import it.unical.mat.embasp.platforms.desktop.DesktopHandler;
 import it.unical.mat.embasp.specializations.dlv.desktop.DLVDesktopService;
-import model.MyCallback;
-import model.MyCallback;
 import model.Option;
 import model.Result;
 import resources.Config;
@@ -24,6 +21,7 @@ import resources.Config;
 /**
  * Racchiude nelle funzioni i metodi del framework EmbASP per generare Answer
  * Set usuffruendo del solver DLV
+ * 
  *
  */
 public class SolverDLV {
@@ -56,7 +54,7 @@ public class SolverDLV {
 	}
 
 	/**
-	 * Aggiunge le opzioni al programma ed esegue il solver in maniere sincrona
+	 * Aggiunge le opzioni al programma ed esegue il solver in maniera sincrona
 	 * 
 	 * @param options
 	 *            Riceve le opzioni da settare
@@ -102,6 +100,7 @@ public class SolverDLV {
 			handler.addOption(opDescriptor);
 		}
 		opDescriptor.addOption(" ");
+		System.out.println(opDescriptor.getOptions());
 		handler.startAsync(call);
 	}
 
@@ -115,6 +114,14 @@ public class SolverDLV {
 	public String getPath() {
 		String OS = System.getProperty("os.name").toLowerCase();
 		StringBuffer path = new StringBuffer();
+		path.append(config.getAbsolutePathTimeout());
+		path.append(File.separator);
+		path.append("./timeout ");
+		path.append("-t ");
+		path.append(config.getTimeMax());
+		path.append(" -m ");
+		path.append(config.getMemMax());
+		path.append(" ");
 		path.append(config.getAbsolutePath());
 		path.append(File.separator);
 		path.append("dlv");
@@ -129,13 +136,14 @@ public class SolverDLV {
 		} else if (OS.indexOf("nux") >= 0) {
 			String arch = System.getProperty("os.arch");
 			if (arch.equals("x86_64")) {
-				path.append("lib/dlv.x86-64-linux-elf-static.bin");
+				path.append("dlv.x86-64-linux-elf-static.bin");
 
 			} else {
-				path.append("lib/dlv.i386-apple-darwin.bin");
+				path.append("dlv.i386-apple-darwin.bin");
 
 			}
 		}
+		System.out.println(path.toString() + " full path"); // debug string
 		return path.toString();
 
 	}
@@ -151,7 +159,7 @@ public class SolverDLV {
 
 	/**
 	 * Controlla che il formato delle opzioni sia corretto, utilizzando la regex
-	 * per il valore e verificando se il nome delle opzioni esiste tra quelle
+	 * per il valore e verificando se il nome delle opzioni esiste tra le quelle
 	 * di DLV
 	 * 
 	 * @param options
@@ -160,18 +168,16 @@ public class SolverDLV {
 	 *         false
 	 */
 	public boolean checkOptionsDLV(ArrayList<Option> options) {
-		Pattern regex = Pattern.compile("[A-Za-z0-9]+");
+		Pattern regex = Pattern.compile("[A-Za-z0-9=_-]+");
 		Matcher matcher;
 
 		for (Option option : options) {
 			if (!optionsDLV.contains(option.getName()) && !option.getName().equals("option")) {
-
 				return false;
 			}
 			for (String value : option.getValue()) {
 				matcher = regex.matcher(value);
 				if (!matcher.matches()) {
-
 					return false;
 				}
 			}
