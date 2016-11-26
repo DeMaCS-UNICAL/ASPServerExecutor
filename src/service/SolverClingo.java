@@ -110,14 +110,16 @@ public class SolverClingo {
 	public String getPath() {
 		String OS = System.getProperty("os.name").toLowerCase();
 		StringBuffer path = new StringBuffer();
-		path.append(config.getAbsolutePathTimeout());
-		path.append(File.separator);
-		path.append("./timeout ");
-		path.append("-t ");
-		path.append(config.getTimeMax());
-		path.append(" -m ");
-		path.append(config.getMemMax());
-		path.append(" ");
+		if (OS.indexOf("nux") >= 0){
+			path.append(config.getAbsolutePathTimeout());
+			path.append(File.separator);
+			path.append("./timeout ");
+			path.append("-t ");
+			path.append(config.getTimeMax());
+			path.append(" -m ");
+			path.append(config.getMemMax());
+			path.append(" ");
+		}
 		path.append(config.getAbsolutePath());
 		path.append(File.separator);
 		path.append("clingo");
