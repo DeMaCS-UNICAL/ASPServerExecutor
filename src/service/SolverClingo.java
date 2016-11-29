@@ -139,6 +139,8 @@ public class SolverClingo {
 		} else if (OS.indexOf("nux") >= 0) {
 			path.append("clingo_linux");
 		}
+		
+		System.out.println(path.toString() + " full path"); // debug string
 		return path.toString();
 
 	}

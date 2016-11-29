@@ -142,7 +142,7 @@ public class SolverDLV {
 				path.append("dlv.x86-64-linux-elf-static.bin");
 
 			} else {
-				path.append("dlv.i386-apple-darwin.bin");
+				path.append("dlv.i386-linux-elf-static.bin");
 
 			}
 		}
