@@ -41,14 +41,16 @@ public class SocketController {
 		Gson gson = new Gson();
 		Lock lock = new ReentrantLock();
 		String engine = gson.fromJson(object.get("engine"), String.class);
-		String program = gson.fromJson(object.get("program"), String.class);
+		Type programsType = new TypeToken<ArrayList<String>>() {
+		}.getType();
+		ArrayList<String> programs = gson.fromJson(object.get("program"), programsType);
 		Type optionType = new TypeToken<ArrayList<Option>>() {
 		}.getType();
 		ArrayList<Option> options = gson.fromJson(object.get("option"), optionType);
 		Result result = new Result();
 		switch (engine) {
 		case "dlv":
-			SolverDLV service = new SolverDLV(program);
+			SolverDLV service = new SolverDLV(programs);
 			if (service.checkOptionsDLV(options)) { // cotrolla che le opzioni ricevute siano nel formato corretto
 				service.solveAsync(options, new MyCallback(session.getAsyncRemote(),lock));
 
@@ -57,7 +59,7 @@ public class SocketController {
 			}
 			break;
 		case "clingo":
-			SolverClingo serviceClingo = new SolverClingo(program);
+			SolverClingo serviceClingo = new SolverClingo(programs);
 			if (serviceClingo.checkOptionsClingo(options)) {
 				serviceClingo.solveAsync(options, new MyCallback(session.getAsyncRemote(),lock));
 			} else {

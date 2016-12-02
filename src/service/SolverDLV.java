@@ -25,7 +25,7 @@ import resources.Config;
  *
  */
 public class SolverDLV {
-	private String program;
+	private ArrayList<String> programs;
 	private DLVDesktopService dlvService;
 	private Result result;
 	private Handler handler;
@@ -39,7 +39,7 @@ public class SolverDLV {
 	 * @param program
 	 *            riceve e inserisce il programma per essere seguito
 	 */
-	public SolverDLV(String program) {
+	public SolverDLV(ArrayList<String> programs) {
 		this.result = new Result();
 		this.config = new Config();
 		this.optionsDLV = new HashSet<String>();
@@ -47,9 +47,9 @@ public class SolverDLV {
 		this.dlvService = new DLVDesktopService(getPath());
 		this.handler = new DesktopHandler(dlvService);
 		this.input = new InputProgram();
-		this.program = program;
+		this.programs = programs;
 		input.setSeparator(" ");
-		input.addProgram(program);
+		addPrograms(programs, input);
 		handler.addProgram(input);
 	}
 
@@ -188,6 +188,12 @@ public class SolverDLV {
 
 		return true;
 	}
+	
+	public void addPrograms(ArrayList<String> programs,InputProgram input){
+		for (String p : programs) {
+			input.addProgram(p);
+		}
+	}
 
 	public InputProgram getInput() {
 		return input;
@@ -205,12 +211,12 @@ public class SolverDLV {
 		this.handler = handler;
 	}
 
-	public String getProgram() {
-		return program;
+	public ArrayList<String> getPrograms() {
+		return programs;
 	}
 
-	public void setProgram(String program) {
-		this.program = program;
+	public void setPrograms(ArrayList<String> programs) {
+		this.programs = programs;
 	}
 
 	public Result getResult() {
@@ -244,5 +250,4 @@ public class SolverDLV {
 	public void setOptionsDLV(Set<String> optionDLV) {
 		this.optionsDLV = optionDLV;
 	}
-
 }

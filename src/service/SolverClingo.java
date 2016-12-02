@@ -24,7 +24,7 @@ import resources.Config;
  *
  */
 public class SolverClingo {
-	private String program;
+	private ArrayList<String> programs;
 	private ClingoDesktopService clingoService;
 	private Result result;
 	private Handler handler;
@@ -37,15 +37,15 @@ public class SolverClingo {
 	 * @param program
 	 *            riceve e inserisce il programma per essere seguito
 	 */
-	public SolverClingo(String program) {
+	public SolverClingo(ArrayList<String> programs) {
 		this.result = new Result();
 		this.config = new Config();
 		this.clingoService = new ClingoDesktopService(getPath());
 		this.handler = new DesktopHandler(clingoService);
 		this.input = new InputProgram();
-		this.program = program;
+		this.setPrograms(programs);
 		input.setSeparator(" ");
-		input.addProgram(program);
+		addPrograms(programs, input);
 		handler.addProgram(input);
 	}
 
@@ -171,6 +171,12 @@ public class SolverClingo {
 		return true;
 	}
 
+	public void addPrograms(ArrayList<String> programs,InputProgram input){
+		for (String p : programs) {
+			input.addProgram(p);
+		}
+	}
+
 	public InputProgram getInput() {
 		return input;
 	}
@@ -187,12 +193,12 @@ public class SolverClingo {
 		this.handler = handler;
 	}
 
-	public String getProgram() {
-		return program;
+	public ArrayList<String> getPrograms() {
+		return programs;
 	}
 
-	public void setProgram(String program) {
-		this.program = program;
+	public void setPrograms(ArrayList<String> programs) {
+		this.programs = programs;
 	}
 
 	public Result getResult() {

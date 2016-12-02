@@ -37,7 +37,7 @@ public class MyCallback implements Callback {
 	public void callback(Output output) {
 		AnswerSets answerSets = (AnswerSets) output;
 		Result r = new Result();
-		if (answerSets.getAnswersets().equals("")) {
+		if (answerSets.getAnswerSetsString().equals("")) {
 			r.setError("Sorry, there is an error");
 		} else {
 			r.setModel(answerSets.getAnswerSetsString());
