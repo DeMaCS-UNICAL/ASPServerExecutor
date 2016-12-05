@@ -40,7 +40,28 @@ public class MyCallback implements Callback {
 		if (answerSets.getAnswerSetsString().equals("")) {
 			r.setError("Sorry, there is an error");
 		} else {
-			r.setModel(answerSets.getAnswerSetsString());
+			StringBuilder model = new StringBuilder(answerSets.getAnswerSetsString());
+			int p = answerSets.getAnswerSetsString().indexOf("clingo");
+			if (p != -1) {
+				int v = answerSets.getAnswerSetsString().indexOf("Reading");
+				int s = answerSets.getAnswerSetsString().indexOf("Solving");
+				int a = answerSets.getAnswerSetsString().indexOf("Answer");
+				int sa= answerSets.getAnswerSetsString().indexOf("SATISFIABLE");
+				int m = answerSets.getAnswerSetsString().indexOf("Models");
+				int c = answerSets.getAnswerSetsString().indexOf("Calls");
+				int t = answerSets.getAnswerSetsString().indexOf("Time");
+				int cpu= answerSets.getAnswerSetsString().indexOf("CPU");
+										
+				model.insert(cpu, '\n');
+				model.insert(t, '\n');
+				model.insert(c, '\n');
+				model.insert(m, '\n');
+				model.insert(sa, '\n');
+				model.insert(a, '\n');
+				model.insert(s, '\n');
+				model.insert(v, '\n');
+			}
+			r.setModel(model.toString());
 		}
 		System.out.println(answerSets.getAnswerSetsString()); // debug string
 		lock.lock();

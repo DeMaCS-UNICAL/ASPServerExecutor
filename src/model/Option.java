@@ -24,7 +24,7 @@ public class Option {
 	 */
 	public String getToASP() {
 		StringBuffer s = new StringBuffer();
-		if (!name.equals("option")) {
+		if (!name.equals("free choise")) {
 			s.append(name);
 			for (int i = 0; i < value.size(); i++) {
 				if (i != 0) {
@@ -34,11 +34,11 @@ public class Option {
 
 			}
 		} else {
-			for (int i = 0; i < value.size()-1; i++) {
+			for (int i = 0; i < value.size() - 1; i++) {
 				s.append(value.get(i));
 				s.append(" ");
 			}
-			s.append(value.get(value.size()-1));
+			s.append(value.get(value.size() - 1));
 		}
 
 		return s.toString();
@@ -46,11 +46,15 @@ public class Option {
 
 	public String getToClingo() {
 		StringBuffer s = new StringBuffer();
-		for (int i = 0; i < value.size() - 1; i++) {
-			s.append(value.get(i));
-			s.append(" ");
+		if (!name.equals("")) {
+			for (int i = 0; i < value.size() - 1; i++) {
+				s.append(value.get(i));
+				s.append(" ");
+			}
+			s.append(value.get(value.size() - 1));
+		} else {
+			s.append(name);
 		}
-		s.append(value.get(value.size() - 1));
 		return s.toString();
 	}
 
