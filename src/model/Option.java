@@ -24,7 +24,7 @@ public class Option {
 	 */
 	public String getToASP() {
 		StringBuffer s = new StringBuffer();
-		if (!name.equals("free choise")) {
+		if (!name.equals("free choice")) {
 			s.append(name);
 			for (int i = 0; i < value.size(); i++) {
 				if (i != 0) {

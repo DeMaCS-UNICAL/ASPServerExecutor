@@ -179,7 +179,7 @@ public class SolverDLV {
 		Matcher matcher;
 
 		for (Option option : options) {
-			if (!optionsDLV.contains(option.getName()) && !option.getName().equals("free choise") && !option.getName().equals("")) {
+			if (!optionsDLV.contains(option.getName()) && !option.getName().equals("free choice") && !option.getName().equals("")) {
 				return false;
 			}
 			for (String value : option.getValue()) {
