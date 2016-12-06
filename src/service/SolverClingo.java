@@ -62,9 +62,10 @@ public class SolverClingo {
 		opDescriptor.setSeparator(" ");
 		for (int i = 0; i < options.size(); i++) {
 			Option optiontmp = options.get(i);
-			opDescriptor.addOption(optiontmp.getToClingo());
-			handler.addOption(opDescriptor);
-
+			if (!optiontmp.getName().equals("")) {
+				opDescriptor.addOption(optiontmp.getToClingo());
+				handler.addOption(opDescriptor);
+			}
 		}
 		opDescriptor.addOption(" ");
 		Output output = handler.startSync();
@@ -92,8 +93,10 @@ public class SolverClingo {
 		opDescriptor.setSeparator(" ");
 		for (int i = 0; i < options.size(); i++) {
 			Option optiontmp = options.get(i);
+			if (!optiontmp.getName().equals("")){
 				opDescriptor.addOption(optiontmp.getToClingo());
 				handler.addOption(opDescriptor);
+			}
 		}
 		System.out.println(opDescriptor.getOptions()); // debug string
 		opDescriptor.addOption(" ");

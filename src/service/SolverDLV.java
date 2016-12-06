@@ -66,8 +66,10 @@ public class SolverDLV {
 		opDescriptor.setSeparator(" ");
 		for (int i = 0; i < options.size(); i++) {
 			Option optiontmp = options.get(i);
-			opDescriptor.addOption(optiontmp.getToASP());
-			handler.addOption(opDescriptor);
+			if (!optiontmp.getName().equals("")) {
+				opDescriptor.addOption(optiontmp.getToASP());
+				handler.addOption(opDescriptor);
+			}
 
 		}
 		opDescriptor.addOption(" ");
@@ -96,8 +98,10 @@ public class SolverDLV {
 		opDescriptor.setSeparator(" ");
 		for (int i = 0; i < options.size(); i++) {
 			Option optiontmp = options.get(i);
-			opDescriptor.addOption(optiontmp.getToASP());
-			handler.addOption(opDescriptor);
+			if (!optiontmp.getName().equals("")) {
+				opDescriptor.addOption(optiontmp.getToASP());
+				handler.addOption(opDescriptor);
+			}
 		}
 		opDescriptor.addOption(" ");
 		System.out.println(opDescriptor.getOptions());
