@@ -51,15 +51,15 @@ public class MyCallback implements Callback {
 				int c = answerSets.getAnswerSetsString().indexOf("Calls");
 				int t = answerSets.getAnswerSetsString().indexOf("Time");
 				int cpu= answerSets.getAnswerSetsString().indexOf("CPU");
-										
-				model.insert(cpu, '\n');
-				model.insert(t, '\n');
-				model.insert(c, '\n');
-				model.insert(m, '\n');
-				model.insert(sa, '\n');
-				model.insert(a, '\n');
-				model.insert(s, '\n');
-				model.insert(v, '\n');
+				
+				insertString(cpu, model);
+				insertString(t, model);
+				insertString(c, model);
+				insertString(m, model);
+				insertString(sa, model);
+				insertString(a, model);
+				insertString(s, model);
+				insertString(v, model);	
 			}
 			r.setModel(model.toString());
 		}
@@ -67,6 +67,17 @@ public class MyCallback implements Callback {
 		lock.lock();
 		remote.sendText(r.toJson());
 		lock.unlock();
+	}
+	
+	/**
+	 * Check if the value exists and then insert \n into the string 
+	 * @param p index of string
+	 * @param model string to modify
+	 */
+	public void insertString(int p, StringBuilder model) {
+		if (p != -1) {
+			model.insert(p, '\n');
+		}
 	}
 
 }
