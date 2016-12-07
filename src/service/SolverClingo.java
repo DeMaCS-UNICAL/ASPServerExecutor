@@ -161,14 +161,17 @@ public class SolverClingo {
 	public boolean checkOptionsClingo(ArrayList<Option> options) {
 		Pattern regex = Pattern.compile("[A-Za-z0-9=_-]*");
 		Matcher matcher;
-		for (Option option : options) {	
+		for (Option option : options) {
+			if (!option.getName().equals("free choice") && !option.getName().equals("")) {
+				return false;
+			}
 			for (String value : option.getValue()) {
 				matcher = regex.matcher(value);
 				if (!matcher.matches()) {
 					return false;
 				}
 			}
-			
+
 		}
 
 		return true;
