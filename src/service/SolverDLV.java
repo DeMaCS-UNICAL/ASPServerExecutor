@@ -162,6 +162,7 @@ public class SolverDLV {
 		optionsDLV.add("-silent");
 		optionsDLV.add("-filter=");
 		optionsDLV.add("-nofacts");
+		optionsDLV.add("-FC");
 	}
 
 	/**
