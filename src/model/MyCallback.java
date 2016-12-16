@@ -40,44 +40,12 @@ public class MyCallback implements Callback {
 		if (answerSets.getAnswerSetsString().equals("")) {
 			r.setError("Sorry, there is an error");
 		} else {
-			StringBuilder model = new StringBuilder(answerSets.getAnswerSetsString());
-			int p = answerSets.getAnswerSetsString().indexOf("clingo");
-			if (p != -1) {
-				int v = answerSets.getAnswerSetsString().indexOf("Reading");
-				int s = answerSets.getAnswerSetsString().indexOf("Solving");
-				int a = answerSets.getAnswerSetsString().indexOf("Answer");
-				int sa= answerSets.getAnswerSetsString().indexOf("SATISFIABLE");
-				int m = answerSets.getAnswerSetsString().indexOf("Models");
-				int c = answerSets.getAnswerSetsString().indexOf("Calls");
-				int t = answerSets.getAnswerSetsString().indexOf("Time");
-				int cpu= answerSets.getAnswerSetsString().indexOf("CPU");
-				
-				insertString(cpu, model);
-				insertString(t, model);
-				insertString(c, model);
-				insertString(m, model);
-				insertString(sa, model);
-				insertString(a, model);
-				insertString(s, model);
-				insertString(v, model);	
-			}
-			r.setModel(model.toString());
+			r.setModel(answerSets.getAnswerSetsString());
 		}
 		System.out.println(answerSets.getAnswerSetsString()); // debug string
 		lock.lock();
 		remote.sendText(r.toJson());
 		lock.unlock();
-	}
-	
-	/**
-	 * Check if the value exists and then insert \n into the string 
-	 * @param p index of string
-	 * @param model string to modify
-	 */
-	public void insertString(int p, StringBuilder model) {
-		if (p != -1) {
-			model.insert(p, '\n');
-		}
 	}
 
 }
