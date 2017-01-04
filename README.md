@@ -21,7 +21,7 @@ __*It currently supports only two solvers (DLV and Clingo) for Answer Set Progra
 ## Quick start (Installation and Usage)
 Install [Apache Tomcat&reg;](http://tomcat.apache.org)
 
-Download the [Latest Release](/releases/latest) of the ASPServerExecutor
+Download the [Latest Release](../../releases/latest) of the ASPServerExecutor
 
 Deploy ASPServerExecutor.war in Tomcat:
  1. Go to Tomcat webapps folder and paste it.
