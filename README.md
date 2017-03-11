@@ -1,5 +1,7 @@
 # ASPServerExecutor
-_ASPServerExecutor_ is a Java application that is able to execute ASP programs, using different solvers. It runs on top of _Apache Tomcat&reg;_ and it exposes a set of API that can be used to invoke the solvers. It uses _WebSocket_ as communication protocol and _JSON_ ad data interchange format.
+_ASPServerExecutor_ is a Java application that is able to execute ASP programs with different solvers, using the [EmbASP](https://github.com/DeMaCS-UNICAL/EmbASP) framework.
+It runs on top of _Apache Tomcat&reg;_ and it exposes a set of API that can be used to invoke the solvers.
+It uses _WebSocket_ as communication protocol and _JSON_ ad data interchange format.
 [...]
 
 
