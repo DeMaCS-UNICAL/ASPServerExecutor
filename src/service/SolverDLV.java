@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import it.unical.mat.embasp.asp.AnswerSets;
+import it.unical.mat.embasp.languages.asp.AnswerSets;
 import it.unical.mat.embasp.base.Callback;
 import it.unical.mat.embasp.base.Handler;
 import it.unical.mat.embasp.base.InputProgram;
