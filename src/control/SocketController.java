@@ -28,8 +28,10 @@ import service.SolverDLV;
 public class SocketController {
 
 	@OnOpen
-	public void onOpen(Session session) {
-		// Metodo eseguito all'apertura della connessione
+	public void onOpen(Session session) {// Metodo eseguito all'apertura della connessione
+		Result result = new Result();
+		result.setModel("Running..");
+		session.getAsyncRemote().sendText(result.toJson());
 
 	}
 
