@@ -7,7 +7,7 @@ It uses _WebSocket_ as communication protocol and _JSON_ ad data interchange for
 
 ## IMPORTANT NOTE
 
-__*EmbASPServerExecutor is part of an undergraduate student's work of thesis, and is still at the early stages of development.*__
+__*EmbASPServerExecutor is part of a graduate student's work of thesis, and is still at the early stages of development.*__
 
 __*It currently supports only two solvers (DLV and Clingo) for Answer Set Programming; we encourage any feedback, but we do NOT recommend it for production yet.*__
 
