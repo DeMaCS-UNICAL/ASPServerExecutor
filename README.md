@@ -1,8 +1,13 @@
+
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/DeMaCS-UNICAL/EmbASPServerExecutor/master/LICENSE)
+[![GitHub release](https://img.shields.io/github/release/DeMaCS-UNICAL/EmbASPServerExecutor.svg)](https://github.com/DeMaCS-UNICAL/EmbASPServerExecutor/releases/latest)
+[![GitHub issues](https://img.shields.io/github/issues/DeMaCS-UNICAL/EmbASPServerExecutor.svg)](https://github.com/DeMaCS-UNICAL/EmbASPServerExecutor/issues)
+[![Twitter](https://img.shields.io/twitter/url/https/github.com/DeMaCS-UNICAL/EmbASPServerExecutor.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=%5Bobject%20Object%5D)
+
 # EmbASPServerExecutor
 _EmbASPServerExecutor_ is a Java application that is able to execute ASP programs with different solvers, using the [EmbASP](https://github.com/DeMaCS-UNICAL/EmbASP) framework.
 It runs on top of _Apache Tomcat&reg;_ and it exposes a set of API that can be used to invoke the solvers.
 It uses _WebSocket_ as communication protocol and _JSON_ ad data interchange format.
-[...]
 
 
 ## IMPORTANT NOTE
@@ -10,14 +15,6 @@ It uses _WebSocket_ as communication protocol and _JSON_ ad data interchange for
 __*EmbASPServerExecutor is part of a graduate student's work of thesis, and is still at the early stages of development.*__
 
 __*It currently supports only two solvers (DLV and Clingo) for Answer Set Programming; we encourage any feedback, but we do NOT recommend it for production yet.*__
-
-
-## Purpose
-[...]
-
-
-## Key Features
-[...]
 
 
 ## Quick start (Installation and Usage)
