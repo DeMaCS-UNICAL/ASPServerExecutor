@@ -24,13 +24,13 @@ These instructions will get you a copy of the project up and running on your loc
 It requires only [Java&reg;](http://oracle.com/java) and [Apache Tomcat&reg;](http://tomcat.apache.org)
 
 ### Installing
-Download the [Latest Release](../../releases/latest) of the EmbASPServerExecutor
+Download the [Latest Release](../../releases/latest) of _EmbASPServerExecutor_
 
-Deploy EmbASPServerExecutor.war in Tomcat:
+Deploy `EmbASPServerExecutor.war` in Tomcat:
  1. Go to Tomcat webapps folder and paste it.
  2. Go to `Tomcat/bin` folder and start Tomcat by clicking *startup.bat* for Windows, for Linux run *startup.sh*
- 3. Go to `webapps/EmbASPServerExecutor/WEB-INF/classes/resources` folder and change the value **absolute_path** in *config.properties* file with your absolute path of the solver ASP
- 4. Restart Tomcat (or just restart the EmbASPServerExecutor application)
+ 3. Go to `webapps/EmbASPServerExecutor/WEB-INF/classes/resources` folder and change the value **absolute_path** in *config.properties* file with your absolute path of the ASP solvers
+ 4. Restart Tomcat (or just restart the _EmbASPServerExecutor_ application)
 
 ### Running
 Can be invoked using the WebSocket protocol, as explained in the [Wiki](https://github.com/DeMaCS-UNICAL/EmbASPServerExecutor/wiki/APIs)
@@ -54,4 +54,4 @@ From the [Department of Mathematics and Computer Science](https://www.mat.unical
 
 
 ## License
-  [MIT](LICENSE)
+  This project is licensed under the [MIT License](LICENSE)
