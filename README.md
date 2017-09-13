@@ -17,9 +17,13 @@ __*EmbASPServerExecutor is part of a graduate student's work of thesis, and is s
 __*It currently supports only two solvers (DLV and Clingo) for Answer Set Programming; we encourage any feedback, but we do NOT recommend it for production yet.*__
 
 
-## Quick start (Installation and Usage)
-Install [Apache Tomcat&reg;](http://tomcat.apache.org)
+## Getting Started (Installation and Usage)
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
+### Prerequisites
+It requires only [Java&reg;](http://oracle.com/java) and [Apache Tomcat&reg;](http://tomcat.apache.org)
+
+### Installing
 Download the [Latest Release](../../releases/latest) of the EmbASPServerExecutor
 
 Deploy EmbASPServerExecutor.war in Tomcat:
@@ -27,6 +31,9 @@ Deploy EmbASPServerExecutor.war in Tomcat:
  2. Go to `Tomcat/bin` folder and start Tomcat by clicking *startup.bat* for Windows, for Linux run *startup.sh*
  3. Go to `webapps/EmbASPServerExecutor/WEB-INF/classes/resources` folder and change the value **absolute_path** in *config.properties* file with your absolute path of the solver ASP
  4. Restart Tomcat (or just restart the EmbASPServerExecutor application)
+
+### Running
+Can be invoked using the WebSocket protocol, as explained in the [Wiki](https://github.com/DeMaCS-UNICAL/EmbASPServerExecutor/wiki/APIs)
 
 
 ## Credits
