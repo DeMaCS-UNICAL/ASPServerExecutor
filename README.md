@@ -35,6 +35,15 @@ Deploy EmbASPServerExecutor.war in Tomcat:
 ### Running
 Can be invoked using the WebSocket protocol, as explained in the [Wiki](https://github.com/DeMaCS-UNICAL/EmbASPServerExecutor/wiki/APIs)
 
+<!-- 
+## Contributing
+
+Please read [CONTRIBUTING.md]() for details on our code of conduct, and the process for submitting pull requests to us.
+ -->
+
+## Versioning
+We use [Semantic Versioning](http://semver.org) for versioning. For the versions available, see the [releases on this repository](https://github.com/DeMaCS-UNICAL/EmbASPServerExecutor/releases). 
+
 
 ## Credits
  - Eliana Palermiti
