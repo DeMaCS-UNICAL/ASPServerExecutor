@@ -3,35 +3,31 @@ package service;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import it.unical.mat.embasp.base.InputProgram;
 import it.unical.mat.embasp.platforms.desktop.DesktopHandler;
-import it.unical.mat.embasp.specializations.clingo.desktop.ClingoDesktopService;
+import it.unical.mat.embasp.specializations.dlv2.desktop.DLV2DesktopService;
 import model.Option;
 import model.Result;
 import resources.Config;
 
-/**
- * Racchiude nelle funzioni i metodi del framework EmbASP per generare Answer
- * Set usuffruendo del solver Clingo
- * 
- *
- */
-public class SolverClingo extends Solver {
-	private ClingoDesktopService clingoService;
-
+public class SolverDLV2 extends Solver {
+	
+	private DLV2DesktopService dlv2Service;
+	
 	/**
 	 * inizializza le varie classi necessarie al funzionamento di EmbASP
 	 * 
 	 * @param program
 	 *            riceve e inserisce il programma per essere seguito
 	 */
-	public SolverClingo(ArrayList<String> programs) {
+	public SolverDLV2(ArrayList<String> programs) {
+		this.dlv2Service = new DLV2DesktopService(getPath("dlv2"));
+		handler = new DesktopHandler(dlv2Service);
 		result = new Result();
 		config = new Config();
-		clingoService = new ClingoDesktopService(getPath("clingo"));
-		handler = new DesktopHandler(clingoService);
-		input = new InputProgram();
 		this.programs = programs;
+		input = new InputProgram();
 		input.setSeparator(" ");
 		addPrograms(programs, input);
 		handler.addProgram(input);
@@ -51,12 +47,10 @@ public class SolverClingo extends Solver {
 					return false;
 				}
 			}
-
 		}
-
 		return true;
 	}
-	
+
 	@Override
 	public String getPath(String solver) {
 		String OS = System.getProperty("os.name").toLowerCase();
@@ -71,7 +65,7 @@ public class SolverClingo extends Solver {
 			}
 
 		} else if (OS.indexOf("mac") >= 0) {
-			path.append("clingo_macos");
+			path.append("dlv2");
 
 		} else if (OS.indexOf("nux") >= 0) {
 			path.append("clingo_linux");
@@ -80,13 +74,13 @@ public class SolverClingo extends Solver {
 		System.out.println(path.toString() + " full path"); // debug string
 		return path.toString();
 	}
-
-	public ClingoDesktopService getClingoService() {
-		return clingoService;
+	
+	public DLV2DesktopService getDlv2Service() {
+		return dlv2Service;
 	}
 
-	public void setClingoService(ClingoDesktopService clingoService) {
-		this.clingoService = clingoService;
+	public void setDlv2Service(DLV2DesktopService dlv2Service) {
+		this.dlv2Service = dlv2Service;
 	}
 
 }

@@ -23,6 +23,7 @@ import model.Option;
 import model.Result;
 import service.SolverClingo;
 import service.SolverDLV;
+import service.SolverDLV2;
 
 @ServerEndpoint("/home")
 public class SocketController {
@@ -53,8 +54,8 @@ public class SocketController {
 		switch (engine) {
 		case "dlv":
 			SolverDLV service = new SolverDLV(programs);
-			if (service.checkOptionsDLV(options)) { // cotrolla che le opzioni ricevute siano nel formato corretto
-				service.solveAsync(options, new MyCallback(session.getAsyncRemote(),lock));
+			if (service.checkOptions(options)) { // cotrolla che le opzioni ricevute siano nel formato corretto
+				service.solveAsync(options, new MyCallback(session.getAsyncRemote(),lock), "dlv");
 
 			} else {
 				result.setError("Sorry, these options aren't valid");
@@ -62,13 +63,20 @@ public class SocketController {
 			break;
 		case "clingo":
 			SolverClingo serviceClingo = new SolverClingo(programs);
-			if (serviceClingo.checkOptionsClingo(options)) {
-				serviceClingo.solveAsync(options, new MyCallback(session.getAsyncRemote(),lock));
+			if (serviceClingo.checkOptions(options)) {
+				serviceClingo.solveAsync(options, new MyCallback(session.getAsyncRemote(),lock), "clingo");
 			} else {
 				result.setError("Sorry, these options aren't valid");
 			}
 			break;
-
+		case "dlv2":
+			SolverDLV2 serviceDLV2 = new SolverDLV2(programs);
+			if (serviceDLV2.checkOptions(options)) { // cotrolla che le opzioni ricevute siano nel formato corretto
+				serviceDLV2.solveAsync(options, new MyCallback(session.getAsyncRemote(),lock), "dlv");
+			} else {
+				result.setError("Sorry, these options aren't valid");
+			}
+			break;
 		default:
 			break;
 		}
