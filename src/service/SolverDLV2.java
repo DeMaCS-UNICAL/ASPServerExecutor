@@ -55,21 +55,8 @@ public class SolverDLV2 extends Solver {
 	public String getPath(String solver) {
 		String OS = System.getProperty("os.name").toLowerCase();
 		StringBuffer path = setPath(solver,OS);
-		
-		if (OS.indexOf("win") >= 0) {
-			String arch = System.getProperty("os.arch");
-			if (arch.equals("x86_64")) {
-				path.append("clingo64.exe");
-			} else {
-				path.append("clingo32.exe");
-			}
-
-		} else if (OS.indexOf("mac") >= 0) {
-			path.append("dlv2");
-
-		} else if (OS.indexOf("nux") >= 0) {
-			path.append("clingo_linux");
-		}
+	
+		path.append("dlv2");
 		
 		System.out.println(path.toString() + " full path"); // debug string
 		return path.toString();
