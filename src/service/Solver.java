@@ -9,7 +9,6 @@ import it.unical.mat.embasp.base.InputProgram;
 import it.unical.mat.embasp.base.OptionDescriptor;
 import it.unical.mat.embasp.base.Output;
 import it.unical.mat.embasp.languages.asp.AnswerSets;
-import it.unical.mat.embasp.platforms.desktop.DesktopHandler;
 import it.unical.mat.embasp.specializations.dlv.desktop.DLVDesktopService;
 import model.Option;
 import model.Result;
@@ -38,16 +37,16 @@ abstract class Solver {
 		StringBuffer path = new StringBuffer();
 		
 		if (OS.indexOf("nux") >= 0){
-			path.append(config.getAbsolutePathTimeout());
+			path.append(config.getProperty("absolute_path_timeout"));
 			path.append(File.separator);
 			path.append("./timeout ");
 			path.append("-t ");
-			path.append(config.getTimeMax());
+			path.append(config.getProperty("timeMax"));
 			path.append(" -m ");
-			path.append(config.getMemMax());
+			path.append(config.getProperty("memMax"));
 			path.append(" ");
 		}
-		path.append(config.getAbsolutePath());
+		path.append(config.getProperty("absolute_path"));
 		path.append(File.separator);
 		path.append(solver);
 		path.append(File.separator);
