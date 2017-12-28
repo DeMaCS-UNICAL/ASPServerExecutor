@@ -111,7 +111,16 @@ abstract class Solver {
 		for (int i = 0; i < options.size(); i++) {
 			Option optiontmp = options.get(i);
 			if (!optiontmp.getName().equals("")){
-				opDescriptor.addOption(solverOption);
+				switch (solverOption) {
+				case "dlv":
+					opDescriptor.addOption(optiontmp.getToASP());
+					break;
+				case "clingo":
+					opDescriptor.addOption(optiontmp.getToClingo());
+					break;
+				default:
+					break;
+				}
 				handler.addOption(opDescriptor);
 			}
 		}
