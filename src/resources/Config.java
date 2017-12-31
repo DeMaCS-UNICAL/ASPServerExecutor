@@ -17,17 +17,8 @@ public class Config {
 		}
 	}
 
-	public String getAbsolutePath() {
-		return configFile.getProperty("absolute_path");
-	}
-	public String getAbsolutePathTimeout(){
-		return configFile.getProperty("absolute_path_timeout");
-	}
-	public String getMemMax(){
-		return configFile.getProperty("memMax");
-	}
-	public String getTimeMax(){
-		return configFile.getProperty("timeMax");
+	public String getProperty(String key) {
+		return configFile.getProperty(key);
 	}
 
 	public Properties getConfigFile() {
