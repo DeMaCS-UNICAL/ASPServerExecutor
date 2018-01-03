@@ -28,9 +28,11 @@ Download the [Latest Release](../../releases/latest) of _EmbASPServerExecutor_
 
 Deploy `EmbASPServerExecutor.war` in Tomcat:
  1. Go to Tomcat webapps folder and paste it.
- 2. Go to `Tomcat/bin` folder and start Tomcat by clicking *startup.bat* for Windows, for Linux run *startup.sh*
- 3. Go to `webapps/EmbASPServerExecutor/WEB-INF/classes/resources` folder and change the value **absolute_path** in *config.properties* file with your absolute path of the ASP solvers
- 4. Restart Tomcat (or just restart the _EmbASPServerExecutor_ application)
+ 1. Go to `Tomcat/bin` folder and start Tomcat by clicking *startup.bat* for Windows, for Linux run *startup.sh*
+ 1. Go to `webapps/EmbASPServerExecutor/WEB-INF/classes/resources` folder and change the value **absolute_path** in *config.properties* file with your absolute path of the ASP solvers (substitute `$CATALINA_BASE` with the path of your Tomcat installation, it is shown when you start Tomcat)
+ 1. Restart Tomcat (or just restart the _EmbASPServerExecutor_ application)
+
+Note that on Linux systems you may need to change the _Execute_ permission of the files in the [WebContent/WEB-INF/lib](https://github.com/DeMaCS-UNICAL/EmbASPServerExecutor/tree/master/WebContent/WEB-INF/lib) folder.
 
 ### Running
 Can be invoked using the WebSocket protocol, as explained in the [Wiki](https://github.com/DeMaCS-UNICAL/EmbASPServerExecutor/wiki/APIs)
