@@ -37,6 +37,11 @@ Note that on Linux systems you may need to change the _Execute_ permission of th
 ### Running
 Can be invoked using the WebSocket protocol, as explained in the [Wiki](https://github.com/DeMaCS-UNICAL/EmbASPServerExecutor/wiki/APIs)
 
+## Built With
+ - [EmbASP](https://www.mat.unical.it/calimeri/projects/embasp) - To execute logic programs with different solvers
+ - [Gson](https://github.com/google/gson) - To convert Java Objects into JSON and back
+ - [timeout](http://coldattic.info/page/resourcelimit) - To limit time and memory consumption of the executors under Linux
+
 <!-- 
 ## Contributing
 
