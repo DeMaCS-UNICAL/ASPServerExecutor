@@ -16,6 +16,7 @@
 /build/
 /bin/
 target/
+!/WebContent/WEB-INF/lib/*
 
 ######################
 # Eclipse
