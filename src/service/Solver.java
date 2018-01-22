@@ -20,7 +20,7 @@ abstract class Solver {
 	protected Handler handler;
 	protected InputProgram input;
 	protected Config config;
-	protected String REGEX_VALIDATION = "[A-Za-z0-9=_./-]*";
+	protected String REGEX_VALIDATION = "[A-Za-z0-9=_-]*";
 	DLVDesktopService dlvService;
 
 	
