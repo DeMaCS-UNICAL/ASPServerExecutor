@@ -53,7 +53,7 @@ public class SolverDLV extends Solver {
 
 	@Override
 	public boolean checkOptions(ArrayList<Option> options) {
-		Pattern regex = Pattern.compile("[A-Za-z0-9=_-]*");
+		Pattern regex = Pattern.compile(REGEX_VALIDATION);
 		Matcher matcher;
 
 		for (Option option : options) {
@@ -75,7 +75,7 @@ public class SolverDLV extends Solver {
 	public String getPath(String solver) {
 		String OS = System.getProperty("os.name").toLowerCase();
 		StringBuffer path = setPath(solver, OS);
-		
+	
 		if (OS.indexOf("win") >= 0) {
 			path.append("dlv.mingw.exe");
 
