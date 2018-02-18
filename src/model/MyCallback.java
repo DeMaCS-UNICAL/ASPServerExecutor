@@ -61,8 +61,7 @@ public class MyCallback implements Callback {
 		Pattern regex2 = Pattern.compile(REGEX_PATH2);
 		Matcher m = regex.matcher(result);
 		Matcher m2 = regex2.matcher(result);
-		if (m.find())
-		{
+		if (m.find()) {
 			newResult = result.replaceAll(m.group(0), "");
 		}
 		if (m2.find()) {
