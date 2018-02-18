@@ -35,7 +35,7 @@ public class SolverDLV2 extends Solver {
 
 	@Override
 	public boolean checkOptions(ArrayList<Option> options) {
-		REGEX_VALIDATION = "[A-Za-z0-9=_./-]*";
+		REGEX_VALIDATION = "[A-Za-z0-9=_\\.\\-,]*";
 		Pattern regex = Pattern.compile(REGEX_VALIDATION);
 		Matcher matcher;
 		for (Option option : options) {
