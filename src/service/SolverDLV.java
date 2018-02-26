@@ -84,7 +84,7 @@ public class SolverDLV extends Solver {
 
 		} else if (OS.indexOf("nux") >= 0) {
 			String arch = System.getProperty("os.arch");
-			if (arch.equals("x86_64")) {
+			if (arch.contains("64")) {
 				path.append("dlv.x86-64-linux-elf-static.bin");
 
 			} else {
